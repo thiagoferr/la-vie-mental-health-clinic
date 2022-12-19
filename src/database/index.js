@@ -13,12 +13,19 @@ const config = {
 }
 let db = {};
 
+if(process.env.NODE_ENV === 'production'){
+    Object.assign(config, {
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            }
+        }
+    })
+}
+
 try {
-    db = new Sequelize(database, username, password, {
-        dialect: auth.dialect,
-        host: auth.host,
-        port:  auth.port
-    });
+    db = new Sequelize( database, username, password, config );
 } catch (err) {
     console.error("Erro ao carregar o banco de dados", err);
 }
