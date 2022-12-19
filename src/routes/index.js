@@ -12,6 +12,11 @@ const verifiedToken = require('../controller/decodeAndValidateToken');
 
 //---------------------------------------------------------------------------------//
 
+routes.get('/', (req, res) => {
+    console.log(`O IP ${req.ip} acessou via rota: ${req.originalUrl}`);
+    return res.json("The Server Is Running...")
+})
+
 routes.post('/appointment', auth, appointmentController.store);
 routes.get('/appointment', auth, appointmentController.findAll);
 routes.get('/appointment/:id', verifiedToken.decodeToken, appointmentController.findById);
